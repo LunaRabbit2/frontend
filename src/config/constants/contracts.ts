@@ -5,7 +5,7 @@ export default {
   },
   staking: {
     97: '0x2198Ae1b12048BC3E68D0E97Ba861F8515EcA853',
-    56: '',
+    56: '0x12DDa3F6a58708FeC8711761e0fbaEcd04F3E10c',
   },
   lunar: {
     97: '0x8859f999E683cB6FfA1f558c9ab14e9c11C1a7cb',
