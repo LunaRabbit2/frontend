@@ -9,7 +9,12 @@
       <button type="button" @click="onPresentStake" class="btn btn-sm stake-btn">
         <i class="bi bi-plus"></i>
       </button>
-      <button type="button" @click="onPresentUnstake" class="btn btn-sm stake-btn ml-2">
+      <template v-if="stakingData.lockPlan == 'Fixed'">
+        <button type="button" @click="onPresentUnstake" class="btn btn-sm stake-btn ml-2" v-if="allowUnstaking">
+          <i class="bi bi-dash"></i>
+        </button>
+      </template>
+      <button type="button" @click="onPresentUnstake" class="btn btn-sm stake-btn ml-2" v-else>
         <i class="bi bi-dash"></i>
       </button>
     </div>

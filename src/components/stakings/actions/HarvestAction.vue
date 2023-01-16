@@ -1,44 +1,21 @@
 <template>
-  <Button
-    type="button"
-    class="btn btn-block mt-3 btn-primary cornered-btn"
-    @click="onPresentCollect"
-    :class="{
-      'no-click': !hasEarnings,
-    }"
-    label="Harvest"
-  />
-  <Dialog
-    header="LUNA Harvest"
-    v-model:visible="displayDialog"
-    contentClass="d-flex flex-column"
-    dismissableMask
-    modal
-  >
+  <Button type="button" class="btn btn-block mt-3 btn-primary cornered-btn" @click="onPresentCollect" :class="{
+    'no-click': !hasEarnings,
+  }" label="Harvest" />
+  <Dialog :class="'mx-w'" header="LUNA Harvest" v-model:visible="displayDialog" contentClass="d-flex flex-column" dismissableMask modal>
     <div class="d-flex justify-content-between align-items-center mt-5 mb-5">
       <div>Harvesting:</div>
-      <div class="d-flex flex-column">
+      <div class="">
         <h3>{{ formattedBalance }} LUNA</h3>
       </div>
     </div>
     <template #footer>
-      <Button
-        v-if="pendingTx"
-        :loading="pendingTx"
-        type="button"
-        class="btn btn-block mt-3 btn-primary cornered-btn w-100"
-        label="Confirming..."
-      />
-      <Button
-        v-else
-        type="button"
-        @click="handleHarvestConfirm"
-        class="btn btn-block mt-3 btn-primary cornered-btn w-100"
-        :class="{
+      <Button v-if="pendingTx" :loading="pendingTx" type="button"
+        class="btn btn-block mt-3 btn-primary cornered-btn w-100" label="Confirming..." />
+      <Button v-else type="button" @click="handleHarvestConfirm"
+        class="btn btn-block mt-3 btn-primary cornered-btn w-100" :class="{
           'no-click': pendingTx,
-        }"
-        label="Confirm"
-      />
+        }" label="Confirm" />
     </template>
   </Dialog>
 </template>
@@ -108,7 +85,7 @@ export default class HarvestAction extends mixins(Vue.with(Props), CommonMixin) 
 
         this.displayDialog = false;
       }
-      this.$store.commit('useTxToast', {txHash: tx.hash})
+      this.$store.commit('useTxToast', { txHash: tx.hash })
     } catch (err) {
       useCatchTxError(err, tx);
     } finally {
@@ -130,21 +107,25 @@ export default class HarvestAction extends mixins(Vue.with(Props), CommonMixin) 
 }
 </script>
 <style lang="scss" scoped>
+
 .btn-sm {
   min-width: 30px;
   padding: 4px 16px;
   flex-grow: 1;
 }
+
 .cornered-btn {
   border-radius: 0.75rem !important;
 }
+
 .btn-primary {
   background: #9982ed !important;
-  
-    &:hover {
-      background: #9982ed;
-    }
+
+  &:hover {
+    background: #9982ed;
+  }
 }
+
 .no-click {
   cursor: not-allowed;
   filter: grayscale(0.8);

@@ -24,7 +24,7 @@ export const mainnetTokens = defineTokens({
 export const testnetTokens = defineTokens({
   lunar: new Token(
     TESTNET,
-    '0x15955B0164B36265309f47A1De05FC0cDb1Fb285',
+    '0x8859f999E683cB6FfA1f558c9ab14e9c11C1a7cb',
     18,
     'LUNA',
     'Lunar Rabbit Token',

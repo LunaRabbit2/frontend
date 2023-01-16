@@ -5,7 +5,7 @@ const stakingConfig: SerializedStaking[] = [
   {
     lid: 0,
     contractAddress: {
-      97: '0x259070c81103e06313888DA13ae0B65B6accacf6',
+      97: '0x2198Ae1b12048BC3E68D0E97Ba861F8515EcA853',
       56: '',
     },
     tier: 'TIER 1',
@@ -15,7 +15,7 @@ const stakingConfig: SerializedStaking[] = [
   }, {
     lid: 1,
     contractAddress: {
-      97: '0x259070c81103e06313888DA13ae0B65B6accacf6',
+      97: '0x2198Ae1b12048BC3E68D0E97Ba861F8515EcA853',
       56: '',
     },
     tier: 'TIER 2',
@@ -25,7 +25,7 @@ const stakingConfig: SerializedStaking[] = [
   }, {
     lid: 2,
     contractAddress: {
-      97: '0x259070c81103e06313888DA13ae0B65B6accacf6',
+      97: '0x2198Ae1b12048BC3E68D0E97Ba861F8515EcA853',
       56: '',
     },
     tier: 'TIER 3',

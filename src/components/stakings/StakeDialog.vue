@@ -3,7 +3,7 @@
     isRemovingStake ? 'Unstake your LUNA' : 'Stake LUNA to earn more LUNA'
   " v-model:visible="displayDialog" contentClass="d-flex flex-column" dismissableMask modal>
     <div class="d-flex justify-content-between mb-2">
-      <strong>{{ isRemovingStake ? "Unstake" : "Stake" }}: </strong>
+      <strong>{{ isRemovingStake? "Unstake": "Stake" }}: </strong>
       <div class="d-flex align-items-center">
         <img class="item sq-2 rounded-circle" src="/img/llogoo.png" alt="LUNA" />
         <span class="ml-2">LUNA</span>
@@ -17,6 +17,9 @@
     </div>
     <div class="jfPlkw" v-if="userNotEnoughToken">
       Insufficient LUNA in your wallet
+    </div>
+    <div class="jfPlkw" v-if="inEligible">
+      Minimum amount to participate is 760,000 LUNA tokens
     </div>
     <div class="text-right">
       {{ `Bal: ${getFullDisplayBalance(getCalculatedStakingLimit(), 18)}` }}
@@ -82,10 +85,11 @@ class Props {
 export default class StakeDialog extends mixins(Vue.with(Props), CommonMixin) {
   displayDialog = false;
   userNotEnoughToken: boolean = false;
+  inEligible: boolean = true;
   pendingTx: boolean = false;
   isRemovingStake = false;
 
-  minimumStakingBalance: BigNumber = new BigNumber(2000000000);
+  minimumStakingBalance: BigNumber = new BigNumber(760000);
 
   fullDecimalStakeAmount: BigNumber = new BigNumber(0);
   BigNumber = BigNumber;
@@ -153,7 +157,8 @@ export default class StakeDialog extends mixins(Vue.with(Props), CommonMixin) {
     if (
       !this.stakeAmount ||
       parseFloat(this.stakeAmount) === 0 ||
-      this.userNotEnoughToken
+      this.userNotEnoughToken ||
+      this.inEligible
     )
       return;
     const { onStake } = useStaking(this.stakingData.lid);
@@ -209,11 +214,14 @@ export default class StakeDialog extends mixins(Vue.with(Props), CommonMixin) {
       );
       this.userNotEnoughToken = this.isRemovingStake
         ? new BigNumber(this.stakingData.userData.amountStaked).lt(
-            this.fullDecimalStakeAmount
-          )
+          this.fullDecimalStakeAmount
+        )
         : new BigNumber(this.stakingData.userData.balance).lt(
-            this.fullDecimalStakeAmount
-          );
+          this.fullDecimalStakeAmount
+        );
+      this.inEligible = new BigNumber(this.stakingData.userData.balance).lt(
+        this.minimumStakingBalance
+      );
       this.annualRoi =
         Number(this.stakeAmount) > 0
           ? this.getAnnualRoi(this.stakeAmount)
@@ -240,6 +248,7 @@ export default class StakeDialog extends mixins(Vue.with(Props), CommonMixin) {
   border-radius: 8px;
   padding: 15px;
 }
+
 .jfPlkw {
   color: #ed4b9e;
   font-weight: 400;
@@ -247,21 +256,25 @@ export default class StakeDialog extends mixins(Vue.with(Props), CommonMixin) {
   margin-top: 4px;
   font-size: 12px;
 }
+
 .btn-sm {
   min-width: 30px;
   padding: 4px 16px;
   flex-grow: 1;
 }
+
 .cornered-btn {
   border-radius: 0.75rem !important;
 }
+
 .btn-primary {
-background: #9982ed !important;
+  background: #9982ed !important;
 
   &:hover {
     background: #9982ed;
   }
 }
+
 .no-click {
   cursor: not-allowed;
   filter: grayscale(0.8);
